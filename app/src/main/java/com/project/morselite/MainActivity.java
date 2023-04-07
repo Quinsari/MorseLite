@@ -1,7 +1,12 @@
 package com.project.morselite;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mTextBefore;
     private TextView mMorseText;
     Map<Character, String> morseMap = new HashMap<>();
+    private CameraManager cameraManager;
+    private String getCameraID;
 
 
     @Override
@@ -61,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
         morseMap.put('8', "---..");
         morseMap.put('9', "----.");
         morseMap.put('0', "-----");
+
+        cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            // O means back camera unit,
+            // 1 means front camera unit
+            getCameraID = cameraManager.getCameraIdList()[0];
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public void convert(View view){
@@ -87,9 +103,10 @@ public class MainActivity extends AppCompatActivity {
         return morseText;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void emitMorse(View view){
         String morseToSend = getMorse();
-
+        flash.emitFlash(morseToSend, cameraManager, getCameraID);
     }
 
 }
