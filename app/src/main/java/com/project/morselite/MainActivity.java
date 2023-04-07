@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         morseMap.put('8', "---..");
         morseMap.put('9', "----.");
         morseMap.put('0', "-----");
+        morseMap.put(' ', "/");
 
         cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {

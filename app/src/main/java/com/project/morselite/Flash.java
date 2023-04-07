@@ -21,6 +21,8 @@ public class Flash {
                     case '-':
                         emitFlash(2, cameraManager, getCameraID);
                         break;
+                    case '/':
+                        emitFlash(4, cameraManager, getCameraID);
                     default:
                         break;
                 }
@@ -65,6 +67,11 @@ public class Flash {
                 break;
             case 3:
                 Thread.sleep(unit * 3);
+                break;
+            case 4:
+                Thread.sleep(unit * 7);
+                break;
+            default:
                 break;
 
         }
