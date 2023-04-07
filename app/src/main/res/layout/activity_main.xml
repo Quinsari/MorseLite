@@ -7,31 +7,35 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/morseOutput"
         android:layout_width="250dp"
         android:layout_height="150dp"
         android:text="Morse Code"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.574" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/textInput"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:text="Input Text"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="126dp" />
+        app:layout_constraintBottom_toTopOf="@id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="convert"
         android:text="Translate"
-        tools:layout_editor_absoluteX="144dp"
-        tools:layout_editor_absoluteY="259dp" />
+        app:layout_constraintBottom_toTopOf="@id/morseOutput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput" />
 
     <Button
         android:id="@+id/button2"
@@ -39,6 +43,11 @@
         android:layout_height="wrap_content"
         android:text="Flash"
         tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="528dp" />
+        tools:layout_editor_absoluteY="528dp"
+        android:onClick="emitMorse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/morseOutput"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
