@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void convert(View view){
         String plainText = mTextBefore.getText().toString();
+        plainText = plainText.toLowerCase();
         String morseText = "";
 
         for(int i = 0; i < plainText.length(); i++){

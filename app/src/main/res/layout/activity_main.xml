@@ -6,23 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/morseOutput"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:text="Morse Code"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button"
-        app:layout_constraintBottom_toBottomOf="parent" />
+
 
     <EditText
         android:id="@+id/textInput"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:text="Input Text"
+        android:textSize="30dp"
+        android:layout_width="336dp"
+        android:layout_height="160dp"
+        android:hint="Input Text"
         app:layout_constraintBottom_toTopOf="@id/button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,10 +26,22 @@
         android:layout_height="wrap_content"
         android:onClick="convert"
         android:text="Translate"
-        app:layout_constraintBottom_toTopOf="@id/morseOutput"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInput" />
+
+    <TextView
+        android:id="@+id/morseOutput"
+        android:textSize="30dp"
+        android:layout_width="361dp"
+        android:layout_height="232dp"
+        android:hint="Morse Output -.-"
+        app:layout_constraintBottom_toTopOf="@id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button" />
 
     <Button
         android:id="@+id/button2"
