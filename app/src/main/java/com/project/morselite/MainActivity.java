@@ -104,9 +104,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void emitMorse(View view){
+    public void emitMorse(View view) throws InterruptedException {
         String morseToSend = getMorse();
-        flash.emitFlash(morseToSend, cameraManager, getCameraID);
+        flash.convertToFlash(morseToSend, cameraManager, getCameraID);
     }
 
 }
