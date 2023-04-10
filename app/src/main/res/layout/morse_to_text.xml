@@ -17,8 +17,7 @@
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/morseInput"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/morseInput"
@@ -29,41 +28,48 @@
         android:hint="@string/morseInputText"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/alphaOutput" />
 
     <Button
         android:id="@+id/dashButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_margin="20dp"
         android:onClick="convert"
-        android:text="-"
+        android:text="@string/dash"
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
         app:layout_constraintRight_toLeftOf="@id/dotButton"
-        app:layout_constraintTop_toBottomOf="@id/morseInput" />
+        app:layout_constraintTop_toBottomOf="@id/morseInput"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/dotButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_margin="20dp"
         android:onClick="convert"
-        android:layout_margin="10dp"
-        android:text="."
+        android:text="@string/dot"
+        android:textSize="30sp"
+        android:gravity="center_horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/morseInput" />
+        app:layout_constraintTop_toBottomOf="@id/morseInput"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/spaceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_margin="20dp"
         android:onClick="convert"
-        android:layout_margin="10dp"
-        android:text="[ ]"
+        android:text="@string/space"
+        android:textSize="30sp"
         app:layout_constraintLeft_toRightOf="@id/dotButton"
-        app:layout_constraintTop_toBottomOf="@id/morseInput" />
+        app:layout_constraintTop_toBottomOf="@id/morseInput"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 

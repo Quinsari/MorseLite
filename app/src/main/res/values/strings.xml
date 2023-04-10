@@ -2,4 +2,7 @@
     <string name="app_name">MorseLite</string>
     <string name="morseInputText">Morse input…</string>
     <string name="alphaOutputText">Alphabetical output…</string>
+    <string name="dash">_</string>
+    <string name="dot">.</string>
+    <string name="space">[ ]</string>
 </resources>
