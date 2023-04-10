@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MorseLite</string>
+    <string name="morseInputText">Morse input…</string>
+    <string name="alphaOutputText">Alphabetical output…</string>
 </resources>

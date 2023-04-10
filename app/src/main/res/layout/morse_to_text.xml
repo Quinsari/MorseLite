@@ -9,25 +9,61 @@
 
     <TextView
         android:id="@+id/alphaOutput"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_margin="100dp"
-        android:text="Morse input..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/border"
+        android:hint="@string/alphaOutputText"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/morseInput"/>
 
     <TextView
         android:id="@+id/morseInput"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_margin="100dp"
-        android:text="Alphanumeric output..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/alphaOutput"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:background="@drawable/border"
+        android:hint="@string/morseInputText"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alphaOutput" />
+
+    <Button
+        android:id="@+id/dashButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:onClick="convert"
+        android:text="-"
+        app:layout_constraintRight_toLeftOf="@id/dotButton"
+        app:layout_constraintTop_toBottomOf="@id/morseInput" />
+
+    <Button
+        android:id="@+id/dotButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="convert"
+        android:layout_margin="10dp"
+        android:text="."
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/morseInput" />
+
+    <Button
+        android:id="@+id/spaceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="convert"
+        android:layout_margin="10dp"
+        android:text="[ ]"
+        app:layout_constraintLeft_toRightOf="@id/dotButton"
+        app:layout_constraintTop_toBottomOf="@id/morseInput" />
 
 
 
