@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/alphaOutput"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="100px"
@@ -15,9 +16,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf=""/>
+        app:layout_constraintBottom_toTopOf="@id/morseInput"/>
 
     <TextView
+        android:id="@+id/morseInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="100px"
+        android:text="Alphanumeric output..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alphaOutput"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
