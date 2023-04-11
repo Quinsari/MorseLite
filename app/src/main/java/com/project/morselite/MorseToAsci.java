@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class MorseToAsci extends Fragment {
 
-    private StringBuilder inputBuilder;
+    private StringBuilder inputBuilder = new StringBuilder();
     private TextView inputView;
     private TextView outputView;
     private Map<String, Character> alphaMap = new HashMap<>();
@@ -105,7 +105,13 @@ public class MorseToAsci extends Fragment {
     private void insertMorse(char c) {
         inputBuilder.append(c);
         inputView.setText(inputBuilder.toString());
-        outputView.setText(morseToAlpha(inputBuilder.toString()));
+        try {
+            outputView.setText(morseToAlpha(inputBuilder.toString()));
+        } catch(NullPointerException e){
+            inputBuilder = new StringBuilder();
+            inputView.setText("");
+            outputView.setText("");
+        }
     }
 
     // takes a string of morse words separated by '/' and
