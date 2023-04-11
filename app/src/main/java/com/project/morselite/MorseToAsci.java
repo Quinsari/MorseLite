@@ -26,10 +26,9 @@ public class MorseToAsci extends Fragment {
 
         View parentView = inflater.inflate(R.layout.morse_to_text, container, false);
 
-
         inputView = parentView.findViewById(R.id.morseInput);
         outputView = parentView.findViewById(R.id.alphaOutput);
-
+        alphaMap = new HashMap<>();
 
 
         alphaMap.put(".-", 'a');
@@ -105,23 +104,21 @@ public class MorseToAsci extends Fragment {
     private void insertMorse(char c) {
         inputBuilder.append(c);
         inputView.setText(inputBuilder.toString());
-        try {
-            outputView.setText(morseToAlpha(inputBuilder.toString()));
-        } catch(NullPointerException e){
-            inputBuilder = new StringBuilder();
-            inputView.setText("");
-            outputView.setText("");
-        }
+        outputView.setText(morseToAlpha(inputBuilder.toString()));
     }
 
     // takes a string of morse words separated by '/' and
     // returns the alphanumeric string produced via translation
     private String morseToAlpha(String s) {
         StringBuilder outputBuilder = new StringBuilder();
-        String[] words = s.split("/");
-        for (String word : words) {
-            char c = alphaMap.get(word);
-            outputBuilder.append(c);
+        if(s.contains("/")) {
+            String[] words = s.split("/");
+            for (String word : words) {
+                if (alphaMap.get(word) != null) {
+                    char c = alphaMap.get(word);
+                    outputBuilder.append(c);
+                }
+            }
         }
         return outputBuilder.toString();
     }
@@ -133,6 +130,19 @@ public class MorseToAsci extends Fragment {
     }
 
     public void backWord(View view) {
+        String temp = inputBuilder.toString();
+        if (!temp.equals("") && !temp.equals("/") && temp.indexOf("/") != temp.lastIndexOf("/")) {
+            if (temp.lastIndexOf("/") == temp.length() - 1) {
+                temp = temp.substring(0, temp.length() - 2);
+            }
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp);
+            insertMorse('/');
 
+        }
+        else {
+            clearMorse(view);
+        }
     }
 }
