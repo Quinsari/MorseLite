@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_morse"
+        android:icon="@drawable/text_icon"
+        android:title="Morse"    />
+
+    <item
+        android:id="@+id/navigation_text"
+        android:icon="@drawable/home_icon"
+        android:title="Home"    />
+
+    <item
+        android:id="@+id/navigation_dict"
+        android:icon="@drawable/help_icon"
+        android:title="Dictionary"    />
+
+</menu>

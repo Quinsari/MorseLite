@@ -1,27 +1,36 @@
 package com.project.morselite;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MorseToAsci extends AppCompatActivity {
+public class MorseToAsci extends Fragment {
 
     private StringBuilder inputBuilder;
     private TextView inputView;
     private TextView outputView;
     private Map<String, Character> alphaMap = new HashMap<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        inputView = findViewById(R.id.morseInput);
-        outputView = findViewById(R.id.alphaOutput);
+        View parentView = inflater.inflate(R.layout.morse_to_text, container, false);
+
+
+        inputView = parentView.findViewById(R.id.morseInput);
+        outputView = parentView.findViewById(R.id.alphaOutput);
+
+
 
         alphaMap.put(".-", 'a');
         alphaMap.put("-...", 'b');
@@ -60,6 +69,22 @@ public class MorseToAsci extends AppCompatActivity {
         alphaMap.put("----.", '9');
         alphaMap.put("-----", '0');
 
+        Button bclear = (Button) parentView.findViewById(R.id.clearButton);
+        bclear.setOnClickListener(this::clearMorse);
+
+        Button bback = (Button) parentView.findViewById(R.id.backWordButton);
+        bback.setOnClickListener(this::backWord);
+
+        Button bdash = (Button) parentView.findViewById(R.id.dashButton);
+        bdash.setOnClickListener(this::addDash);
+
+        Button bdot = (Button) parentView.findViewById(R.id.dotButton);
+        bdot.setOnClickListener(this::addDot);
+
+        Button bslash = (Button) parentView.findViewById(R.id.spaceButton);
+        bslash.setOnClickListener(this::addSlash);
+
+        return parentView;
     }
 
 

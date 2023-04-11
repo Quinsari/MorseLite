@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_text">
+
+    <fragment
+        android:id="@+id/navigation_morse"
+        android:name="com.project.morselite.MorseToAsci"
+        android:label="Morse"
+        tools:layout="@layout/morse_to_text" />
+
+    <fragment
+        android:id="@+id/navigation_text"
+        android:name="com.project.morselite.AsciToMorse"
+        android:label="Home"
+        tools:layout="@layout/text_to_morse" />
+
+    <fragment
+        android:id="@+id/navigation_dict"
+        android:name="com.project.morselite.Dictionary"
+        android:label="Dictionary"
+        tools:layout="@layout/dictionary" />
+</navigation>

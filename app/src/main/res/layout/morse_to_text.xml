@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MorseToAsci">
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/alphaOutput"
@@ -25,7 +25,6 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="clearMorse"
         android:text="@string/clearMorse"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="@id/morseInput"
@@ -37,7 +36,6 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="backWord"
         android:text="@string/clearMorseWord"
         android:textSize="30sp"
         app:layout_constraintRight_toRightOf="@id/morseInput"
@@ -62,7 +60,6 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="addDash"
         android:text="@string/dash"
         android:textSize="30sp"
         android:gravity="center_horizontal"
@@ -95,6 +92,7 @@
         app:layout_constraintLeft_toRightOf="@id/dotButton"
         app:layout_constraintTop_toBottomOf="@id/morseInput"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
 
