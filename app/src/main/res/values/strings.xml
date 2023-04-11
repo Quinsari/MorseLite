@@ -4,5 +4,7 @@
     <string name="alphaOutputText">Alphabetical output…</string>
     <string name="dash">_</string>
     <string name="dot">.</string>
-    <string name="space">[ ]</string>
+    <string name="slash">/</string>
+    <string name="clearMorse">[ x ]</string>
+    <string name="clearMorseWord"><![CDATA[<-x]]></string>
 </resources>

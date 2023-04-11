@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MorseToAsci">
 
     <TextView
         android:id="@+id/alphaOutput"
@@ -18,6 +18,30 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_margin="20dp"
+        android:onClick="clearMorse"
+        android:text="@string/clearMorse"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="@id/morseInput"
+        app:layout_constraintTop_toBottomOf="@id/alphaOutput"
+        app:layout_constraintBottom_toTopOf="@id/morseInput"/>
+
+    <Button
+        android:id="@+id/backWordButton"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:layout_margin="20dp"
+        android:onClick="backWord"
+        android:text="@string/clearMorseWord"
+        android:textSize="30sp"
+        app:layout_constraintRight_toRightOf="@id/morseInput"
+        app:layout_constraintTop_toBottomOf="@id/alphaOutput"
+        app:layout_constraintBottom_toTopOf="@id/morseInput"/>
 
     <TextView
         android:id="@+id/morseInput"
@@ -37,7 +61,7 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="convert"
+        android:onClick="addDash"
         android:text="@string/dash"
         android:textSize="30sp"
         android:gravity="center_horizontal"
@@ -50,7 +74,7 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="convert"
+        android:onClick="addDot"
         android:text="@string/dot"
         android:textSize="30sp"
         android:gravity="center_horizontal"
@@ -64,8 +88,8 @@
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
-        android:onClick="convert"
-        android:text="@string/space"
+        android:onClick="addSlash"
+        android:text="@string/slash"
         android:textSize="30sp"
         app:layout_constraintLeft_toRightOf="@id/dotButton"
         app:layout_constraintTop_toBottomOf="@id/morseInput"
