@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
@@ -17,19 +15,26 @@ import java.util.Map;
 
 public class MorseToAsci extends Fragment {
 
-    private StringBuilder inputBuilder = new StringBuilder();
+    private StringBuilder inputBuilder;
     private TextView inputView;
     private TextView outputView;
-    private Map<String, Character> alphaMap = new HashMap<>();
+    private Map<String, Character> alphaMap;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        setRetainInstance(true);
 
         View parentView = inflater.inflate(R.layout.morse_to_text, container, false);
 
         inputView = parentView.findViewById(R.id.morseInput);
         outputView = parentView.findViewById(R.id.alphaOutput);
+        inputBuilder = new StringBuilder();
         alphaMap = new HashMap<>();
 
+        if (savedInstanceState != null) {
+            inputBuilder.append(savedInstanceState.getString("BUILDER_STRING"));
+        }
 
         alphaMap.put(".-", 'a');
         alphaMap.put("-...", 'b');
@@ -83,26 +88,36 @@ public class MorseToAsci extends Fragment {
         Button bslash = (Button) parentView.findViewById(R.id.spaceButton);
         bslash.setOnClickListener(this::addSlash);
 
+        showMorse();
+
         return parentView;
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("BUILDER_STRING", inputBuilder.toString());
+    }
+
     // the three 'add' methods are listeners for the input buttons
     public void addDash(View view) {
-        insertMorse('-');
+        inputBuilder.append('-');
+        showMorse();
     }
 
     public void addDot(View view) {
-        insertMorse('.');
+        inputBuilder.append('.');
+        showMorse();
     }
 
     public void addSlash(View view) {
-        insertMorse('/');
+        inputBuilder.append('/');
+        showMorse();
     }
 
     // insertMorse is the main component used to update the TextViews
-    private void insertMorse(char c) {
-        inputBuilder.append(c);
+    private void showMorse() {
         inputView.setText(inputBuilder.toString());
         outputView.setText(morseToAlpha(inputBuilder.toString()));
     }
@@ -125,8 +140,7 @@ public class MorseToAsci extends Fragment {
 
     public void clearMorse(View view) {
         inputBuilder = new StringBuilder();
-        inputView.setText("");
-        outputView.setText("");
+        showMorse();
     }
 
     public void backWord(View view) {
@@ -137,8 +151,8 @@ public class MorseToAsci extends Fragment {
             }
             temp = temp.substring(0, temp.lastIndexOf("/"));
             inputBuilder = new StringBuilder();
-            inputBuilder.append(temp);
-            insertMorse('/');
+            inputBuilder.append(temp + "/");
+            showMorse();
         }
         else {
             clearMorse(view);
