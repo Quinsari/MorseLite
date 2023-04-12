@@ -10,4 +10,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="morse_dictionary">A=.-, B=-..., C=-.-., D=-.., E=., F=..-., G=--., H=...., I=.., J=.---, K=-.-, L=.-.., M=--, N=-., O=---, P=.--., Q=--.-, R=.-., S=..., T=-, U=..-, V=...-, W=.--, X=-..-, Y=-.--, Z=--.., 1=.----, 2=..---, 3=...--, 4=....-, 5=....., 6=-...., 7=--..., 8=---.., 9=----. 0=-----</string>
+    <string name="morseOutputString">Morse ... --- ...</string>
+    <string name="translateButtonText">Translate</string>
+    <string name="flashButtonText">Flash</string>
+    <string name="inputTextViewString"><![CDATA[Input A-Z & 0-9]]></string>
 </resources>
