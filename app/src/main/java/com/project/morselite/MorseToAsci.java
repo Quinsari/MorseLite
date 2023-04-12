@@ -133,13 +133,12 @@ public class MorseToAsci extends Fragment {
         String temp = inputBuilder.toString();
         if (!temp.equals("") && !temp.equals("/") && temp.indexOf("/") != temp.lastIndexOf("/")) {
             if (temp.lastIndexOf("/") == temp.length() - 1) {
-                temp = temp.substring(0, temp.length() - 2);
+                temp = temp.substring(0, temp.length() - 1);
             }
             temp = temp.substring(0, temp.lastIndexOf("/"));
             inputBuilder = new StringBuilder();
             inputBuilder.append(temp);
             insertMorse('/');
-
         }
         else {
             clearMorse(view);
