@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +37,14 @@ public class AsciToMorse extends Fragment {
 
         mTextBefore = parentView.findViewById(R.id.textInput);
         mMorseText = parentView.findViewById(R.id.morseOutput);
+        mTextBefore.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    closeKeyboard(v);
+                }
+            }
+        });
 
 
         morseMap.put('a', ".-");
@@ -111,7 +120,27 @@ public class AsciToMorse extends Fragment {
             morseText += " ";
         }
 
+        closeKeyboard(view);
+
         mMorseText.setText(morseText);
+    }
+
+    public void setText(View view){
+        String newText = mTextBefore.getText().toString();
+        mTextBefore.setText(newText);
+        closeKeyboard(view);
+    }
+
+    private void closeKeyboard(View view){
+        try{
+            if (view != null){
+                InputMethodManager imm = (InputMethodManager)
+                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } catch(Exception e){
+            //handles it
+        }
     }
 
     public String getMorse(){
