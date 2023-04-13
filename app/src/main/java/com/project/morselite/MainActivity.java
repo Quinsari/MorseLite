@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     R.id.navigation_text, R.id.navigation_morse, R.id.navigation_dict)
                     .build();
 
-            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
+            //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
             NavigationUI.setupWithNavController(navView, navController);
         }
     }
