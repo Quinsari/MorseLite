@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MorseLite</string>
     <string name="morseInputText">Morse input…</string>
     <string name="alphaOutputText">Alphabetical output…</string>
@@ -7,9 +7,12 @@
     <string name="slash">/</string>
     <string name="clearMorse">Clear</string>
     <string name="clearMorseWord">Back</string>
-    <string name="morse_dictionary">A=.-, B=-..., C=-.-., D=-.., E=., F=..-., G=--., H=...., I=.., J=.---, K=-.-, L=.-.., M=--, N=-., O=---, P=.--., Q=--.-, R=.-., S=..., T=-, U=..-, V=...-, W=.--, X=-..-, Y=-.--, Z=--.., 1=.----, 2=..---, 3=...--, 4=....-, 5=....., 6=-...., 7=--..., 8=---.., 9=----. 0=-----</string>
-    <string name="morseOutputString">Morse ... --- ...</string>
+    <string name="morse_dictionary" tools:ignore="TypographyDashes,TypographyEllipsis">A=.-, B=-..., C=-.-., D=-.., E=., F=..-., G=--., H=...., I=.., J=.---, K=-.-, L=.-.., M=--, N=-., O=---, P=.--., Q=--.-, R=.-., S=..., T=-, U=..-, V=...-, W=.--, X=-..-, Y=-.--, Z=--.., 1=.----, 2=..---, 3=...--, 4=....-, 5=....., 6=-...., 7=--..., 8=---.., 9=----. 0=-----</string>
+    <string name="morseOutputString" tools:ignore="TypographyEllipsis">Morse ... --- ...</string>
     <string name="translateButtonText">Convert</string>
     <string name="flashButtonText">Flash</string>
-    <string name="inputTextViewString"><![CDATA[Input A-Z & 0-9]]></string>
+    <string name="inputTextViewString" tools:ignore="TypographyDashes"><![CDATA[Input A-Z & 0-9]]></string>
+    <string name="morse_nav">Morse In</string>
+    <string name="text_nav">Text In</string>
+    <string name="dict_nav">Dictionary</string>
 </resources>
