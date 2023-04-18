@@ -3,10 +3,12 @@ package com.project.morselite;
 
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Flash implements Runnable{
 
+//    private volatile boolean stop = false;
     private String mMorse;
     private CameraManager mCameraManager;
     private String mGetCameraID;
@@ -24,30 +26,37 @@ public class Flash implements Runnable{
     }
 
     public void run(){
+//        stop = false;
         try {
             convertToFlash(mMorse, mCameraManager, mGetCameraID);
-        } catch(InterruptedException e){
-
-        }
+        } catch(InterruptedException e){}
     }
+
+
+//    public void stop(){
+//        stop = true;
+//    }
 
 
     public void convertToFlash(String morse, CameraManager cameraManager, String getCameraID) throws InterruptedException {
         String[] morseArr = morse.split(" ");
         for(String a: morseArr){
+//            if(stop){return;}
             for(int i = 0; i < a.length(); i++){
-                switch(a.charAt(i)){
-                    case '.':
-                        emitFlash(1, cameraManager, getCameraID);
-                        break;
-                    case '-':
-                        emitFlash(2, cameraManager, getCameraID);
-                        break;
-                    case '/':
-                        emitFlash(4, cameraManager, getCameraID);
-                    default:
-                        break;
-                }
+//                if(stop){return;}
+                    switch (a.charAt(i)) {
+                        case '.':
+                            emitFlash(1, cameraManager, getCameraID);
+                            break;
+                        case '-':
+                            emitFlash(2, cameraManager, getCameraID);
+                            break;
+                        case '/':
+                            emitFlash(4, cameraManager, getCameraID);
+                        default:
+                            break;
+                    }
+
             }
             emitFlash(3, cameraManager, getCameraID);
         }
