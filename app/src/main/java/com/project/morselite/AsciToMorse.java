@@ -23,12 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AsciToMorse extends Fragment {
-    Flash flash = new Flash();
+    Flash flash;
     private EditText mTextBefore;
     private TextView mMorseText;
     Map<Character, String> morseMap = new HashMap<>();
     private CameraManager cameraManager;
     private String getCameraID;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +95,12 @@ public class AsciToMorse extends Fragment {
             e.printStackTrace();
         }
 
+
+
+//        Button bstop = (Button) parentView.findViewById(R.id.stop);
+//        bstop.setOnClickListener(this::stop);
+
+
         Button bconvert = (Button) parentView.findViewById(R.id.convert);
         bconvert.setOnClickListener(this::convert);
 
@@ -109,6 +116,9 @@ public class AsciToMorse extends Fragment {
         return parentView;
     }
 
+//        public void newThread(){
+//            thread = new Thread(flash);
+//        }
 
     public void convert(View view){
         String plainText = mTextBefore.getText().toString();
@@ -124,6 +134,12 @@ public class AsciToMorse extends Fragment {
 
         mMorseText.setText(morseText);
     }
+
+
+//    public void stop(View view) {
+//        thread.interrupt();
+//        thread = new Thread(flash);
+//    }
 
     public void setText(View view){
         String newText = mTextBefore.getText().toString();
@@ -155,9 +171,13 @@ public class AsciToMorse extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void emitMorse(View view) throws InterruptedException {
+    public void emitMorse(View view) throws InterruptedException{
+        flash = new Flash(cameraManager, getCameraID);
+        Thread thread = new Thread(flash);
         String morseToSend = getMorse();
-        flash.convertToFlash(morseToSend, cameraManager, getCameraID);
+        flash.updateMorse(morseToSend);
+        thread.start();
+
     }
 
 }

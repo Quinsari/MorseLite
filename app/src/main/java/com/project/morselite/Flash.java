@@ -5,9 +5,31 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.widget.Toast;
 
-public class Flash {
+public class Flash implements Runnable{
+
+    private String mMorse;
+    private CameraManager mCameraManager;
+    private String mGetCameraID;
     private int unit = 200;
     private Boolean isLit = false;
+
+    public Flash(CameraManager cameraManager, String getCameraID) {
+        mMorse = "";
+        mCameraManager = cameraManager;
+        mGetCameraID = getCameraID;
+    }
+
+    public void updateMorse(String morse) {
+        mMorse = morse;
+    }
+
+    public void run(){
+        try {
+            convertToFlash(mMorse, mCameraManager, mGetCameraID);
+        } catch(InterruptedException e){
+
+        }
+    }
 
 
     public void convertToFlash(String morse, CameraManager cameraManager, String getCameraID) throws InterruptedException {
