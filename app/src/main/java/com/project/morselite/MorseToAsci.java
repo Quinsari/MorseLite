@@ -134,16 +134,12 @@ public class MorseToAsci extends Fragment {
             for (String word : words) {
                 if (alphaMap.get(word) != null) {
                     char c = alphaMap.get(word);
-                    if (Character.isDefined(c)) {
-                        outputBuilder.append(c);
-                    }
+                    outputBuilder.append(c);
                 }
             }
-        } else if (s.length() > 0) {
+        } else if (s.length() > 0 && alphaMap.get(s) != null) {
             char c = alphaMap.get(s);
-            if (Character.isDefined(c)) {
-                outputBuilder.append(c);
-            }
+            outputBuilder.append(c);
         }
         return outputBuilder.toString();
     }
