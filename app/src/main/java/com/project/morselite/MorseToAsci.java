@@ -112,7 +112,10 @@ public class MorseToAsci extends Fragment {
     }
 
     public void addSlash(View view) {
-        inputBuilder.append('/');
+        String s = inputBuilder.toString();
+        if (s.length() > 0 && s.charAt(s.length() - 1) != '/') {
+            inputBuilder.append('/');
+        }
         showMorse();
     }
 
@@ -131,8 +134,15 @@ public class MorseToAsci extends Fragment {
             for (String word : words) {
                 if (alphaMap.get(word) != null) {
                     char c = alphaMap.get(word);
-                    outputBuilder.append(c);
+                    if (Character.isDefined(c)) {
+                        outputBuilder.append(c);
+                    }
                 }
+            }
+        } else if (s.length() > 0) {
+            char c = alphaMap.get(s);
+            if (Character.isDefined(c)) {
+                outputBuilder.append(c);
             }
         }
         return outputBuilder.toString();
@@ -143,6 +153,33 @@ public class MorseToAsci extends Fragment {
         showMorse();
     }
 
+    public void backWord(View view) {
+        String temp = inputBuilder.toString();
+        /* there are more than 1 /'s */
+        if (temp.indexOf('/') != temp.lastIndexOf('/')) {
+            /* remove to the previous / */
+            if (temp.lastIndexOf("/") == temp.length() - 1) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp + "/");
+            showMorse();
+        }
+        /* there is only 1 / && there is text after the / */
+        else if (/* temp.indexOf('/') == temp.lastIndexOf('/') && */ temp.lastIndexOf('/') != -1 && temp.lastIndexOf('/') != temp.length() - 1) {
+            /* remove to the single / */
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp + "/");
+            showMorse();
+        }
+        else {
+            clearMorse(view);
+        }
+    }
+
+/*
     public void backWord(View view) {
         String temp = inputBuilder.toString();
         if (!temp.equals("") && !temp.equals("/") && temp.indexOf("/") != temp.lastIndexOf("/")) {
@@ -158,4 +195,5 @@ public class MorseToAsci extends Fragment {
             clearMorse(view);
         }
     }
+ */
 }
