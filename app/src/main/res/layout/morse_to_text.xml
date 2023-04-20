@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:screenOrientation="portrait"
     tools:context=".MainActivity">
 
     <TextView
@@ -22,22 +22,22 @@
 
     <Button
         android:id="@+id/clearButton"
+        android:drawableTop="@drawable/clear_icon"
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
         android:text="@string/clearMorse"
-        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="@id/morseInput"
         app:layout_constraintTop_toBottomOf="@id/alphaOutput"
         app:layout_constraintBottom_toTopOf="@id/morseInput"/>
 
     <Button
         android:id="@+id/backWordButton"
+        android:drawableTop="@drawable/back_icon"
         android:layout_width="100dp"
         android:layout_height="75dp"
         android:layout_margin="20dp"
         android:text="@string/clearMorseWord"
-        android:textSize="30sp"
         app:layout_constraintRight_toRightOf="@id/morseInput"
         app:layout_constraintTop_toBottomOf="@id/alphaOutput"
         app:layout_constraintBottom_toTopOf="@id/morseInput"/>

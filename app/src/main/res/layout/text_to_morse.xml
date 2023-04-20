@@ -5,55 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.project.morselite.MainActivity">
+    tools:context="com.project.morselite.MainActivity"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
 
 
     <EditText
         android:id="@+id/textInput"
-        android:textSize="30dp"
-        android:layout_width="336dp"
-        android:layout_height="160dp"
-        android:hint="Input A-Z &amp; 0-9"
-        app:layout_constraintBottom_toTopOf="@id/convert"
+        android:textSize="20sp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:hint="@string/inputTextViewString"
+        android:gravity="top"
+        android:background="@drawable/border"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/convert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Translate"
+        android:layout_width="105dp"
+        android:layout_height="75dp"
+        android:text="@string/translateButtonText"
+        android:drawableTop="@drawable/convert_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInput" />
+        app:layout_constraintTop_toBottomOf="@id/textInput"
+        app:layout_constraintBottom_toTopOf="@id/morseOutput"
+        android:layout_margin="20dp" />
 
     <TextView
         android:id="@+id/morseOutput"
-        android:textSize="30dp"
-        android:layout_width="361dp"
-        android:layout_height="232dp"
-        android:hint="Morse ... --- ..."
-        app:layout_constraintBottom_toTopOf="@id/flash"
+        android:textSize="20sp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:hint="@string/morseOutputString"
+        android:background="@drawable/border"
+        android:layout_margin="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/convert" />
+        app:layout_constraintTop_toBottomOf="@id/textInput" />
 
     <Button
         android:id="@+id/flash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flash"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="528dp"
-        android:layout_marginBottom="50dp"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:text="@string/flashButtonText"
+        android:drawableTop="@drawable/flash_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/morseOutput"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp"/>
+
+<Button
+        android:id="@+id/stop"
+        android:visibility="invisible"
+        android:layout_width="100dp"
+        android:layout_height="75dp"
+        android:text="Stop"
+        android:drawableTop="@drawable/clear_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/morseOutput"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="20dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

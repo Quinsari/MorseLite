@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
@@ -17,20 +15,26 @@ import java.util.Map;
 
 public class MorseToAsci extends Fragment {
 
-    private StringBuilder inputBuilder = new StringBuilder();
+    private StringBuilder inputBuilder;
     private TextView inputView;
     private TextView outputView;
-    private Map<String, Character> alphaMap = new HashMap<>();
+    private Map<String, Character> alphaMap;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        setRetainInstance(true);
 
         View parentView = inflater.inflate(R.layout.morse_to_text, container, false);
 
-
         inputView = parentView.findViewById(R.id.morseInput);
         outputView = parentView.findViewById(R.id.alphaOutput);
+        inputBuilder = new StringBuilder();
+        alphaMap = new HashMap<>();
 
-
+        if (savedInstanceState != null) {
+            inputBuilder.append(savedInstanceState.getString("BUILDER_STRING"));
+        }
 
         alphaMap.put(".-", 'a');
         alphaMap.put("-...", 'b');
@@ -84,43 +88,57 @@ public class MorseToAsci extends Fragment {
         Button bslash = (Button) parentView.findViewById(R.id.spaceButton);
         bslash.setOnClickListener(this::addSlash);
 
+        showMorse();
+
         return parentView;
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("BUILDER_STRING", inputBuilder.toString());
+    }
+
     // the three 'add' methods are listeners for the input buttons
     public void addDash(View view) {
-        insertMorse('-');
+        inputBuilder.append('-');
+        showMorse();
     }
 
     public void addDot(View view) {
-        insertMorse('.');
+        inputBuilder.append('.');
+        showMorse();
     }
 
     public void addSlash(View view) {
-        insertMorse('/');
+        String s = inputBuilder.toString();
+        if (s.length() > 0 && s.charAt(s.length() - 1) != '/') {
+            inputBuilder.append('/');
+        }
+        showMorse();
     }
 
     // insertMorse is the main component used to update the TextViews
-    private void insertMorse(char c) {
-        inputBuilder.append(c);
+    private void showMorse() {
         inputView.setText(inputBuilder.toString());
-        try {
-            outputView.setText(morseToAlpha(inputBuilder.toString()));
-        } catch(NullPointerException e){
-            inputBuilder = new StringBuilder();
-            inputView.setText("");
-            outputView.setText("");
-        }
+        outputView.setText(morseToAlpha(inputBuilder.toString()));
     }
 
     // takes a string of morse words separated by '/' and
     // returns the alphanumeric string produced via translation
     private String morseToAlpha(String s) {
         StringBuilder outputBuilder = new StringBuilder();
-        String[] words = s.split("/");
-        for (String word : words) {
-            char c = alphaMap.get(word);
+        if(s.contains("/")) {
+            String[] words = s.split("/");
+            for (String word : words) {
+                if (alphaMap.get(word) != null) {
+                    char c = alphaMap.get(word);
+                    outputBuilder.append(c);
+                }
+            }
+        } else if (s.length() > 0 && alphaMap.get(s) != null) {
+            char c = alphaMap.get(s);
             outputBuilder.append(c);
         }
         return outputBuilder.toString();
@@ -128,11 +146,50 @@ public class MorseToAsci extends Fragment {
 
     public void clearMorse(View view) {
         inputBuilder = new StringBuilder();
-        inputView.setText("");
-        outputView.setText("");
+        showMorse();
     }
 
     public void backWord(View view) {
-
+        String temp = inputBuilder.toString();
+        /* there are more than 1 /'s */
+        if (temp.indexOf('/') != temp.lastIndexOf('/')) {
+            /* remove to the previous / */
+            if (temp.lastIndexOf("/") == temp.length() - 1) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp + "/");
+            showMorse();
+        }
+        /* there is only 1 / && there is text after the / */
+        else if (/* temp.indexOf('/') == temp.lastIndexOf('/') && */ temp.lastIndexOf('/') != -1 && temp.lastIndexOf('/') != temp.length() - 1) {
+            /* remove to the single / */
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp + "/");
+            showMorse();
+        }
+        else {
+            clearMorse(view);
+        }
     }
+
+/*
+    public void backWord(View view) {
+        String temp = inputBuilder.toString();
+        if (!temp.equals("") && !temp.equals("/") && temp.indexOf("/") != temp.lastIndexOf("/")) {
+            if (temp.lastIndexOf("/") == temp.length() - 1) {
+                temp = temp.substring(0, temp.length() - 1);
+            }
+            temp = temp.substring(0, temp.lastIndexOf("/"));
+            inputBuilder = new StringBuilder();
+            inputBuilder.append(temp + "/");
+            showMorse();
+        }
+        else {
+            clearMorse(view);
+        }
+    }
+ */
 }

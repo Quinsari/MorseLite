@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_morse"
-        android:icon="@drawable/text_icon"
-        android:title="Morse"    />
+        android:icon="@drawable/morse_icon"
+        android:title="@string/morse_nav"    />
 
     <item
         android:id="@+id/navigation_text"
-        android:icon="@drawable/home_icon"
-        android:title="Home"    />
+        android:icon="@drawable/text_icon"
+        android:title="@string/text_nav"    />
 
     <item
         android:id="@+id/navigation_dict"
         android:icon="@drawable/help_icon"
-        android:title="Dictionary"    />
+        android:title="@string/dict_nav"    />
 
 </menu>

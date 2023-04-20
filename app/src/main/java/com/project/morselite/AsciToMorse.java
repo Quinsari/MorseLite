@@ -1,5 +1,7 @@
 package com.project.morselite;
 
+import static java.lang.Thread.currentThread;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +12,11 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,14 +24,21 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Handler;
 
 public class AsciToMorse extends Fragment {
-    Flash flash = new Flash();
+    private ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+    Flash flash;
+    public Thread thread;
     private EditText mTextBefore;
     private TextView mMorseText;
     Map<Character, String> morseMap = new HashMap<>();
     private CameraManager cameraManager;
     private String getCameraID;
+    private Button mStartFlash;
+    public static Button mStopFlash;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +47,17 @@ public class AsciToMorse extends Fragment {
 
         mTextBefore = parentView.findViewById(R.id.textInput);
         mMorseText = parentView.findViewById(R.id.morseOutput);
+        mTextBefore.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    closeKeyboard(v);
+                }
+            }
+        });
 
+        mStartFlash = parentView.findViewById(R.id.flash);
+        mStopFlash = parentView.findViewById(R.id.stop);
 
         morseMap.put('a', ".-");
         morseMap.put('b', "-...");
@@ -84,12 +105,20 @@ public class AsciToMorse extends Fragment {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+        flash = new Flash(cameraManager, getCameraID);
+        thread = new Thread(flash);
+
+        Button bstop = (Button) parentView.findViewById(R.id.stop);
+        bstop.setOnClickListener(this::stop);
 
         Button bconvert = (Button) parentView.findViewById(R.id.convert);
         bconvert.setOnClickListener(this::convert);
 
         Button bflash = (Button) parentView.findViewById(R.id.flash);
         bflash.setOnClickListener(view -> {
+            thread.interrupt();
+            mStartFlash.setVisibility(view.INVISIBLE);
+            mStopFlash.setVisibility(view.VISIBLE);
             try {
                 emitMorse(view);
             } catch (InterruptedException e) {
@@ -111,7 +140,39 @@ public class AsciToMorse extends Fragment {
             morseText += " ";
         }
 
+        closeKeyboard(view);
         mMorseText.setText(morseText);
+    }
+
+
+
+    public void stop(View view){
+        //flash.stop();
+        thread.interrupt();
+        try {
+            cameraManager.setTorchMode(getCameraID, false);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+        mStartFlash.setVisibility(view.VISIBLE);
+        mStopFlash.setVisibility(view.INVISIBLE);
+    }
+
+
+    public void setText(View view){
+        String newText = mTextBefore.getText().toString();
+        mTextBefore.setText(newText);
+        closeKeyboard(view);
+    }
+
+    private void closeKeyboard(View view){
+        try{
+            if (view != null){
+                InputMethodManager imm = (InputMethodManager)
+                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        } catch(Exception e){}
     }
 
     public String getMorse(){
@@ -126,9 +187,12 @@ public class AsciToMorse extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void emitMorse(View view) throws InterruptedException {
-        String morseToSend = getMorse();
-        flash.convertToFlash(morseToSend, cameraManager, getCameraID);
+    public void emitMorse(View view) throws InterruptedException{
+                String morseToSend = getMorse();
+                if (morseToSend == ""){return;}
+                thread = new Thread(flash);
+                flash.updateMorse(morseToSend);
+                thread.start();
     }
 
 }
