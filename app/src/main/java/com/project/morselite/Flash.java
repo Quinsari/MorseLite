@@ -3,11 +3,16 @@ package com.project.morselite;
 
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.logging.Handler;
 
 public class Flash implements Runnable{
 
+//    private volatile boolean stop = false;
     private String mMorse;
+    private Thread button;
     private CameraManager mCameraManager;
     private String mGetCameraID;
     private int unit = 200;
@@ -26,32 +31,33 @@ public class Flash implements Runnable{
     public void run(){
         try {
             convertToFlash(mMorse, mCameraManager, mGetCameraID);
-        } catch(InterruptedException e){
-
-        }
+        } catch(InterruptedException e){}
     }
+
 
 
     public void convertToFlash(String morse, CameraManager cameraManager, String getCameraID) throws InterruptedException {
         String[] morseArr = morse.split(" ");
         for(String a: morseArr){
             for(int i = 0; i < a.length(); i++){
-                switch(a.charAt(i)){
-                    case '.':
-                        emitFlash(1, cameraManager, getCameraID);
-                        break;
-                    case '-':
-                        emitFlash(2, cameraManager, getCameraID);
-                        break;
-                    case '/':
-                        emitFlash(4, cameraManager, getCameraID);
-                    default:
-                        break;
-                }
+                    switch (a.charAt(i)) {
+                        case '.':
+                            emitFlash(1, cameraManager, getCameraID);
+                            break;
+                        case '-':
+                            emitFlash(2, cameraManager, getCameraID);
+                            break;
+                        case '/':
+                            emitFlash(4, cameraManager, getCameraID);
+                        default:
+                            break;
+                    }
             }
             emitFlash(3, cameraManager, getCameraID);
         }
     }
+
+
 
     public void emitFlash(int condition, CameraManager cameraManager, String getCameraID) throws InterruptedException {
         switch(condition){
@@ -95,32 +101,8 @@ public class Flash implements Runnable{
                 break;
             default:
                 break;
-
         }
 
-        /*
-        if(!isLit) {
-            try {
-                // true sets the torch in ON mode
-                cameraManager.setTorchMode(getCameraID, true);
-                isLit = true;
-            } catch (CameraAccessException e) {
-                // prints stack trace on standard error
-                // output error stream
-                e.printStackTrace();
-            }
-        }
-        else{
-            try {
-                // true sets the torch in OFF mode
-                cameraManager.setTorchMode(getCameraID, false);
-                isLit = false;
-            } catch (CameraAccessException e) {
-                // prints stack trace on standard error
-                // output error stream
-                e.printStackTrace();
-            }
-        } */
     }
 }
 
