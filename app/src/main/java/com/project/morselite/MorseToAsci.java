@@ -1,5 +1,7 @@
 package com.project.morselite;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ public class MorseToAsci extends Fragment {
     private TextView inputView;
     private TextView outputView;
     private Map<String, Character> alphaMap;
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +92,10 @@ public class MorseToAsci extends Fragment {
         Button bslash = (Button) parentView.findViewById(R.id.spaceButton);
         bslash.setOnClickListener(this::addSlash);
 
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        inputBuilder.append(sharedPref.getString("morseIn", ""));
+
         showMorse();
 
         return parentView;
@@ -121,8 +129,11 @@ public class MorseToAsci extends Fragment {
 
     // insertMorse is the main component used to update the TextViews
     private void showMorse() {
-        inputView.setText(inputBuilder.toString());
-        outputView.setText(morseToAlpha(inputBuilder.toString()));
+        String s = inputBuilder.toString();
+        editor.putString("morseIn", s);
+        editor.apply();
+        inputView.setText(s);
+        outputView.setText(morseToAlpha(s));
     }
 
     // takes a string of morse words separated by '/' and
