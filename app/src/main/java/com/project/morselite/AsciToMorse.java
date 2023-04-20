@@ -12,6 +12,7 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.logging.Handler;
 
 public class AsciToMorse extends Fragment {
     private ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
@@ -36,7 +38,7 @@ public class AsciToMorse extends Fragment {
     private CameraManager cameraManager;
     private String getCameraID;
     private Button mStartFlash;
-    private Button mStopFlash;
+    public static Button mStopFlash;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -114,7 +116,6 @@ public class AsciToMorse extends Fragment {
 
         Button bflash = (Button) parentView.findViewById(R.id.flash);
         bflash.setOnClickListener(view -> {
-            //flash.stop();
             thread.interrupt();
             mStartFlash.setVisibility(view.INVISIBLE);
             mStopFlash.setVisibility(view.VISIBLE);
@@ -140,9 +141,10 @@ public class AsciToMorse extends Fragment {
         }
 
         closeKeyboard(view);
-
         mMorseText.setText(morseText);
     }
+
+
 
     public void stop(View view){
         //flash.stop();
@@ -170,9 +172,7 @@ public class AsciToMorse extends Fragment {
                         getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
-        } catch(Exception e){
-            //handles it
-        }
+        } catch(Exception e){}
     }
 
     public String getMorse(){
@@ -184,10 +184,6 @@ public class AsciToMorse extends Fragment {
             morseText += " ";
         }
         return morseText;
-    }
-
-    public void buttonSwapper(View view){
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
