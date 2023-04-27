@@ -17,11 +17,11 @@ import java.util.Map;
 
 public class MorseToAsci extends Fragment {
 
-    private StringBuilder inputBuilder;
-    private TextView inputView;
-    private TextView outputView;
-    private Map<String, Character> alphaMap;
-    private SharedPreferences sharedPref;
+    private StringBuilder inputBuilder;         // StringBuilder used to have a dynamic object for output
+    private TextView inputView;                 // inputView is the lower text box, used for input but is NOT a textInput
+    private TextView outputView;                // outputView is where the translated morse is displayed
+    private Map<String, Character> alphaMap;    // alphaMap is a hashmap used as the dictionary for translation
+    private SharedPreferences sharedPref;       // sharedPref and editor are used to store/retrieve the morse string from the input field
     private SharedPreferences.Editor editor;
 
     @Override
@@ -31,15 +31,15 @@ public class MorseToAsci extends Fragment {
 
         View parentView = inflater.inflate(R.layout.morse_to_text, container, false);
 
+        // instantiate / assign variables
         inputView = parentView.findViewById(R.id.morseInput);
         outputView = parentView.findViewById(R.id.alphaOutput);
         inputBuilder = new StringBuilder();
         alphaMap = new HashMap<>();
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
 
-        if (savedInstanceState != null) {
-            inputBuilder.append(savedInstanceState.getString("BUILDER_STRING"));
-        }
-
+        // Fill the dictionary
         alphaMap.put(".-", 'a');
         alphaMap.put("-...", 'b');
         alphaMap.put("-.-.", 'c');
@@ -77,6 +77,7 @@ public class MorseToAsci extends Fragment {
         alphaMap.put("----.", '9');
         alphaMap.put("-----", '0');
 
+        // Click Listeners for all 5 buttons
         Button bclear = (Button) parentView.findViewById(R.id.clearButton);
         bclear.setOnClickListener(this::clearMorse);
 
@@ -92,20 +93,12 @@ public class MorseToAsci extends Fragment {
         Button bslash = (Button) parentView.findViewById(R.id.spaceButton);
         bslash.setOnClickListener(this::addSlash);
 
-        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        editor = sharedPref.edit();
+        // Attempt to pull a String using the key "morseIn", if it's null, use "" (empty String)
         inputBuilder.append(sharedPref.getString("morseIn", ""));
 
         showMorse();
 
         return parentView;
-    }
-
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("BUILDER_STRING", inputBuilder.toString());
     }
 
     // the three 'add' methods are listeners for the input buttons
@@ -127,7 +120,7 @@ public class MorseToAsci extends Fragment {
         showMorse();
     }
 
-    // insertMorse is the main component used to update the TextViews
+    // showMorse is the main component used to update the TextViews
     private void showMorse() {
         String s = inputBuilder.toString();
         editor.putString("morseIn", s);
@@ -162,9 +155,9 @@ public class MorseToAsci extends Fragment {
 
     public void backWord(View view) {
         String temp = inputBuilder.toString();
-        /* there are more than 1 /'s */
+        // If there are more than 1 /'s
         if (temp.indexOf('/') != temp.lastIndexOf('/')) {
-            /* remove to the previous / */
+            // remove to the previous /
             if (temp.lastIndexOf("/") == temp.length() - 1) {
                 temp = temp.substring(0, temp.length() - 1);
             }
@@ -173,9 +166,9 @@ public class MorseToAsci extends Fragment {
             inputBuilder.append(temp + "/");
             showMorse();
         }
-        /* there is only 1 / && there is text after the / */
-        else if (/* temp.indexOf('/') == temp.lastIndexOf('/') && */ temp.lastIndexOf('/') != -1 && temp.lastIndexOf('/') != temp.length() - 1) {
-            /* remove to the single / */
+        // If there is only 1 / && there is text after the /
+        else if (temp.lastIndexOf('/') != -1 && temp.lastIndexOf('/') != temp.length() - 1) {
+            // remove to the single /
             temp = temp.substring(0, temp.lastIndexOf("/"));
             inputBuilder = new StringBuilder();
             inputBuilder.append(temp + "/");
@@ -185,22 +178,4 @@ public class MorseToAsci extends Fragment {
             clearMorse(view);
         }
     }
-
-/*
-    public void backWord(View view) {
-        String temp = inputBuilder.toString();
-        if (!temp.equals("") && !temp.equals("/") && temp.indexOf("/") != temp.lastIndexOf("/")) {
-            if (temp.lastIndexOf("/") == temp.length() - 1) {
-                temp = temp.substring(0, temp.length() - 1);
-            }
-            temp = temp.substring(0, temp.lastIndexOf("/"));
-            inputBuilder = new StringBuilder();
-            inputBuilder.append(temp + "/");
-            showMorse();
-        }
-        else {
-            clearMorse(view);
-        }
-    }
- */
 }
